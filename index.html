@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Flexbox Puzzle Assignment</title>
+    <title>Mary Wilson — Sunset Valley</title>
     <style>
       :root {
         --bg-1: #111827;
@@ -13,10 +13,12 @@
         --text: #edf6ff;
         --muted: #d7e3f5;
         --accent: #ffc857;
-        --shadow: rgba(0, 0, 0, 0.30);
+        --shadow: rgba(0, 0, 0, 0.3);
       }
 
-      * { box-sizing: border-box; }
+      * {
+        box-sizing: border-box;
+      }
 
       body {
         margin: 0;
@@ -31,34 +33,40 @@
       .page {
         width: min(1100px, 92vw);
         display: grid;
-        grid-template-columns: repeat(12, 1fr);
+        grid-template-columns: repeat(12, minmax(0, 1fr));
         gap: 1.5rem;
         padding: 2rem 0;
       }
 
       .panel {
+        overflow: hidden;
         background: var(--panel);
         border: 1px solid var(--panel-border);
         border-radius: 18px;
         box-shadow: 0 18px 45px var(--shadow);
-        overflow: hidden;
       }
 
       .intro {
-        grid-column: 1 / span 12;
+        grid-column: 1 / -1;
         padding: 1.5rem 2rem;
       }
 
       .eyebrow {
         margin: 0 0 0.5rem;
+        color: var(--accent);
         font-size: 0.75rem;
+        font-weight: 700;
         letter-spacing: 0.14em;
         text-transform: uppercase;
-        color: var(--accent);
-        font-weight: 700;
       }
 
-      h1, h2, h3, p, ul { margin-top: 0; }
+      h1,
+      h2,
+      h3,
+      p,
+      ul {
+        margin-top: 0;
+      }
 
       h1 {
         margin-bottom: 0.35rem;
@@ -71,7 +79,7 @@
       }
 
       .puzzle-panel {
-        grid-column: 1 / span 8;
+        grid-column: span 8;
         padding: 1.5rem;
       }
 
@@ -81,8 +89,8 @@
 
       .panel-heading h3,
       .info h3 {
-        color: var(--accent);
         margin-bottom: 0.35rem;
+        color: var(--accent);
       }
 
       .panel-heading p,
@@ -91,189 +99,111 @@
         color: var(--muted);
       }
 
+      /* Flexbox arranges the nine square pieces in three rows. */
       .puzzle-board {
-        width: 540px;
-        max-width: 100%;
-        height: 540px;
+        width: min(540px, 100%);
+        aspect-ratio: 1;
         display: flex;
         flex-wrap: wrap;
         margin: 0 auto;
-        border: 4px solid rgba(255,255,255,0.15);
+        overflow: hidden;
+        border: 4px solid rgba(255, 255, 255, 0.2);
         border-radius: 12px;
         background: #0f172a;
-        box-shadow: inset 0 0 0 2px rgba(255,255,255,0.05);
+        box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.05);
       }
 
       .tile {
-        flex: 1 0 33.333%;
-        width: 33.333%;
-        height: 180px;
-        display: block;
-        border: 1px solid rgba(255,255,255,0.12);
-        background: #111827;
+        flex: 0 0 33.333333%;
+        aspect-ratio: 1;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        background-image: url("assets/sunset-valley.svg");
+        background-size: 300% 300%;
+        background-repeat: no-repeat;
       }
 
+      /* Each tile shows its corresponding third of the complete image. */
+      .tile:nth-child(1) { background-position: 0% 0%; }
+      .tile:nth-child(2) { background-position: 50% 0%; }
+      .tile:nth-child(3) { background-position: 100% 0%; }
+      .tile:nth-child(4) { background-position: 0% 50%; }
+      .tile:nth-child(5) { background-position: 50% 50%; }
+      .tile:nth-child(6) { background-position: 100% 50%; }
+      .tile:nth-child(7) { background-position: 0% 100%; }
+      .tile:nth-child(8) { background-position: 50% 100%; }
+      .tile:nth-child(9) { background-position: 100% 100%; }
+
+      /* Included as required, but hidden from view. */
       .faulty-piece {
         display: none;
       }
 
       .info {
-        grid-column: 9 / span 4;
+        grid-column: span 4;
         padding: 1.5rem 1.25rem;
       }
 
       .info ul {
-        list-style: none;
-        padding: 0;
         margin: 0;
+        padding: 0;
+        list-style: none;
       }
 
       .info li {
         margin-bottom: 0.8rem;
       }
 
-      @media (max-width: 850px) {
-        .puzzle-panel { grid-column: 1 / span 12; }
-        .info { grid-column: 1 / span 12; }
+      .note {
+        margin: 1rem 0 0;
       }
 
-      @media (max-width: 560px) {
-        .puzzle-board {
-          width: 100%;
-          height: auto;
-        }
-
-        .tile {
-          height: 120px;
+      @media (max-width: 850px) {
+        .puzzle-panel,
+        .info {
+          grid-column: 1 / -1;
         }
       }
     </style>
   </head>
   <body>
     <main class="page">
-      <section class="panel intro">
+      <section class="panel intro" aria-labelledby="student-name">
         <p class="eyebrow">Student</p>
-        <h1>Mary Wilson</h1>
+        <h1 id="student-name">Mary Wilson</h1>
         <h2>Puzzle: Sunset Valley</h2>
       </section>
 
-      <section class="panel puzzle-panel">
+      <section class="panel puzzle-panel" aria-labelledby="puzzle-title">
         <div class="panel-heading">
-          <h3>Flex Puzzle</h3>
-          <p>Flexbox properties were used to solve this puzzle.</p>
+          <h3 id="puzzle-title">Flex Puzzle</h3>
+          <p>The nine pieces are arranged with Flexbox to show the completed scene.</p>
         </div>
 
-        <div class="puzzle-board" aria-label="Completed puzzle made with flexbox">
-          <!-- Puzzle tiles -->
-          <svg class="tile" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-label="Puzzle tile 1">
-            <rect width="180" height="180" fill="#7ec8ff"/>
-            <rect y="90" width="180" height="90" fill="#ffb347"/>
-            <circle cx="52" cy="48" r="20" fill="#fff2b2" opacity="0.9"/>
-            <path d="M0 110 L60 62 L90 105 L180 74 L180 180 L0 180 Z" fill="#4d7c0f"/>
-            <path d="M0 128 L62 88 L95 122 L130 101 L180 130 L180 180 L0 180 Z" fill="#345c1d"/>
-          </svg>
+        <div class="puzzle-board" aria-label="Completed Sunset Valley puzzle">
+          <div class="tile" role="img" aria-label="Puzzle tile 1"></div>
+          <div class="tile" role="img" aria-label="Puzzle tile 2"></div>
+          <div class="tile" role="img" aria-label="Puzzle tile 3"></div>
+          <div class="tile" role="img" aria-label="Puzzle tile 4"></div>
+          <div class="tile" role="img" aria-label="Puzzle tile 5"></div>
+          <div class="tile" role="img" aria-label="Puzzle tile 6"></div>
+          <div class="tile" role="img" aria-label="Puzzle tile 7"></div>
+          <div class="tile" role="img" aria-label="Puzzle tile 8"></div>
+          <div class="tile" role="img" aria-label="Puzzle tile 9"></div>
 
-          <svg class="tile" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-label="Puzzle tile 2">
-            <rect width="180" height="180" fill="#7ec8ff"/>
-            <rect y="90" width="180" height="90" fill="#ffb347"/>
-            <circle cx="95" cy="41" r="18" fill="#fff2b2" opacity="0.9"/>
-            <path d="M0 118 L35 80 L88 112 L120 92 L170 116 L180 118 L180 180 L0 180 Z" fill="#4d7c0f"/>
-            <path d="M0 133 L40 102 L82 130 L115 115 L150 134 L180 142 L180 180 L0 180 Z" fill="#345c1d"/>
-          </svg>
-
-          <svg class="tile" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-label="Puzzle tile 3">
-            <rect width="180" height="180" fill="#7ec8ff"/>
-            <rect y="90" width="180" height="90" fill="#ffb347"/>
-            <circle cx="140" cy="44" r="18" fill="#fff2b2" opacity="0.9"/>
-            <path d="M0 115 L48 69 L90 106 L120 77 L180 110 L180 180 L0 180 Z" fill="#4d7c0f"/>
-            <path d="M0 136 L52 104 L85 123 L115 108 L180 138 L180 180 L0 180 Z" fill="#345c1d"/>
-          </svg>
-
-          <svg class="tile" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-label="Puzzle tile 4">
-            <rect width="180" height="180" fill="#7ec8ff"/>
-            <rect y="90" width="180" height="90" fill="#ffb703"/>
-            <path d="M0 105 L62 62 L90 105 Z" fill="#5d8b3c"/>
-            <path d="M0 120 L60 80 L115 120 Z" fill="#6fa74a"/>
-            <path d="M0 150 L32 120 L64 148 L82 132 L90 150 L110 126 L130 150 L180 150 L180 180 L0 180 Z" fill="#1d4d4f"/>
-            <rect y="135" width="180" height="45" fill="#0f766e"/>
-          </svg>
-
-          <svg class="tile" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-label="Puzzle tile 5">
-            <rect width="180" height="180" fill="#7ec8ff"/>
-            <rect y="96" width="180" height="84" fill="#ffb703"/>
-            <path d="M18 105 L82 56 L118 105 Z" fill="#5d8b3c"/>
-            <path d="M46 115 L102 70 L140 115 Z" fill="#6fa74a"/>
-            <path d="M0 148 C35 128, 58 128, 90 148 S155 161, 180 146 L180 180 L0 180 Z" fill="#1d4d4f"/>
-            <rect y="138" width="180" height="42" fill="#0f766e"/>
-          </svg>
-
-          <svg class="tile" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-label="Puzzle tile 6">
-            <rect width="180" height="180" fill="#7ec8ff"/>
-            <rect y="96" width="180" height="84" fill="#ffb703"/>
-            <path d="M95 105 L150 68 L180 105 Z" fill="#5d8b3c"/>
-            <path d="M64 116 L135 74 L180 116 Z" fill="#6fa74a"/>
-            <path d="M0 150 C28 128, 60 126, 90 150 S150 160, 180 146 L180 180 L0 180 Z" fill="#1d4d4f"/>
-            <rect y="138" width="180" height="42" fill="#0f766e"/>
-          </svg>
-
-          <svg class="tile" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-label="Puzzle tile 7">
-            <rect width="180" height="180" fill="#7ec8ff"/>
-            <rect y="96" width="180" height="84" fill="#f4d35e"/>
-            <path d="M0 140 L62 104 L85 140 Z" fill="#2d6a4f"/>
-            <path d="M26 150 L80 108 L120 150 Z" fill="#3c845d"/>
-            <path d="M0 160 L180 160 L180 180 L0 180 Z" fill="#1b4332"/>
-            <g fill="#294d34">
-              <rect x="18" y="118" width="10" height="30"/>
-              <rect x="48" y="112" width="8" height="36"/>
-              <rect x="74" y="116" width="9" height="32"/>
-            </g>
-          </svg>
-
-          <svg class="tile" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-label="Puzzle tile 8">
-            <rect width="180" height="180" fill="#7ec8ff"/>
-            <rect y="96" width="180" height="84" fill="#f4d35e"/>
-            <path d="M18 148 L52 120 L84 148 Z" fill="#2d6a4f"/>
-            <path d="M62 152 L90 118 L128 152 Z" fill="#3c845d"/>
-            <path d="M104 150 L150 122 L180 150 Z" fill="#2d6a4f"/>
-            <path d="M0 160 L180 160 L180 180 L0 180 Z" fill="#1b4332"/>
-            <g fill="#294d34">
-              <rect x="35" y="118" width="11" height="35"/>
-              <rect x="90" y="116" width="10" height="38"/>
-              <rect x="132" y="120" width="11" height="34"/>
-            </g>
-          </svg>
-
-          <svg class="tile" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-label="Puzzle tile 9">
-            <rect width="180" height="180" fill="#7ec8ff"/>
-            <rect y="96" width="180" height="84" fill="#f4d35e"/>
-            <path d="M0 140 L54 108 L100 140 Z" fill="#2d6a4f"/>
-            <path d="M60 148 L116 110 L170 148 Z" fill="#3c845d"/>
-            <path d="M0 160 L180 160 L180 180 L0 180 Z" fill="#1b4332"/>
-            <g fill="#294d34">
-              <rect x="26" y="118" width="10" height="30"/>
-              <rect x="84" y="116" width="10" height="34"/>
-              <rect x="138" y="118" width="12" height="30"/>
-            </g>
-          </svg>
-
-          <!-- Hidden faulty piece -->
-          <svg class="tile faulty-piece" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-label="Faulty puzzle piece">
-            <rect width="180" height="180" fill="#e63946"/>
-            <g stroke="#fff" stroke-width="10" stroke-linecap="round">
-              <line x1="30" y1="30" x2="150" y2="150"/>
-              <line x1="150" y1="30" x2="30" y2="150"/>
-            </g>
-            <text x="90" y="170" text-anchor="middle" font-size="18" font-family="Arial" fill="#fff" font-weight="bold">FAULT</text>
-          </svg>
+          <img
+            class="faulty-piece"
+            src="assets/faulty-piece.svg"
+            alt="Faulty puzzle piece"
+          />
         </div>
 
-        <p class="note">The faulty puzzle piece is included but hidden using the display property.</p>
+        <p class="note">The faulty puzzle piece is included in the HTML but hidden with CSS.</p>
       </section>
 
-      <aside class="panel info">
-        <h3>Assignment Details</h3>
+      <aside class="panel info" aria-labelledby="assignment-title">
+        <h3 id="assignment-title">Assignment Details</h3>
         <ul>
-          <li><strong>Name:</strong> Maya Wilson</li>
+          <li><strong>Name:</strong> Mary Wilson</li>
           <li><strong>Puzzle:</strong> Sunset Valley</li>
           <li><strong>Completed:</strong> November 17, 2026</li>
           <li><strong>Layout:</strong> CSS Grid + Flexbox</li>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mary Wilson — Sunset Valley</title>
+    <title>Mary Wilson</title>
     <style>
       :root {
         --bg-1: #111827;
@@ -16,9 +16,7 @@
         --shadow: rgba(0, 0, 0, 0.3);
       }
 
-      * {
-        box-sizing: border-box;
-      }
+      * { box-sizing: border-box; }
 
       body {
         margin: 0;
@@ -39,11 +37,11 @@
       }
 
       .panel {
-        overflow: hidden;
         background: var(--panel);
         border: 1px solid var(--panel-border);
         border-radius: 18px;
         box-shadow: 0 18px 45px var(--shadow);
+        overflow: hidden;
       }
 
       .intro {
@@ -53,20 +51,14 @@
 
       .eyebrow {
         margin: 0 0 0.5rem;
-        color: var(--accent);
         font-size: 0.75rem;
-        font-weight: 700;
         letter-spacing: 0.14em;
         text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 700;
       }
 
-      h1,
-      h2,
-      h3,
-      p,
-      ul {
-        margin-top: 0;
-      }
+      h1, h2, h3, p, ul { margin-top: 0; }
 
       h1 {
         margin-bottom: 0.35rem;
@@ -89,8 +81,8 @@
 
       .panel-heading h3,
       .info h3 {
-        margin-bottom: 0.35rem;
         color: var(--accent);
+        margin-bottom: 0.35rem;
       }
 
       .panel-heading p,
@@ -99,30 +91,30 @@
         color: var(--muted);
       }
 
-      /* Flexbox arranges the nine square pieces in three rows. */
       .puzzle-board {
         width: min(540px, 100%);
         aspect-ratio: 1;
         display: flex;
         flex-wrap: wrap;
         margin: 0 auto;
-        overflow: hidden;
-        border: 4px solid rgba(255, 255, 255, 0.2);
+        border: 4px solid rgba(255,255,255,0.15);
         border-radius: 12px;
         background: #0f172a;
-        box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.05);
+        box-shadow: inset 0 0 0 2px rgba(255,255,255,0.05);
+        overflow: hidden;
       }
 
       .tile {
-        flex: 0 0 33.333333%;
+        flex: 0 0 33.3333%;
+        width: 33.3333%;
         aspect-ratio: 1;
-        border: 1px solid rgba(255, 255, 255, 0.18);
         background-image: url("assets/sunset-valley.svg");
         background-size: 300% 300%;
         background-repeat: no-repeat;
+        border: 1px solid rgba(255,255,255,0.12);
+        display: block;
       }
 
-      /* Each tile shows its corresponding third of the complete image. */
       .tile:nth-child(1) { background-position: 0% 0%; }
       .tile:nth-child(2) { background-position: 50% 0%; }
       .tile:nth-child(3) { background-position: 100% 0%; }
@@ -133,7 +125,6 @@
       .tile:nth-child(8) { background-position: 50% 100%; }
       .tile:nth-child(9) { background-position: 100% 100%; }
 
-      /* Included as required, but hidden from view. */
       .faulty-piece {
         display: none;
       }
@@ -144,64 +135,61 @@
       }
 
       .info ul {
-        margin: 0;
-        padding: 0;
         list-style: none;
+        padding: 0;
+        margin: 0;
       }
 
       .info li {
         margin-bottom: 0.8rem;
       }
 
-      .note {
-        margin: 1rem 0 0;
-      }
-
       @media (max-width: 850px) {
-        .puzzle-panel,
-        .info {
-          grid-column: 1 / -1;
-        }
+        .puzzle-panel { grid-column: 1 / -1; }
+        .info { grid-column: 1 / -1; }
       }
     </style>
   </head>
   <body>
     <main class="page">
-      <section class="panel intro" aria-labelledby="student-name">
+      <section class="panel intro">
         <p class="eyebrow">Student</p>
-        <h1 id="student-name">Mary Wilson</h1>
+        <h1>Mary Wilson</h1>
         <h2>Puzzle: Sunset Valley</h2>
       </section>
 
-      <section class="panel puzzle-panel" aria-labelledby="puzzle-title">
+      <section class="panel puzzle-panel">
         <div class="panel-heading">
-          <h3 id="puzzle-title">Flex Puzzle</h3>
-          <p>The nine pieces are arranged with Flexbox to show the completed scene.</p>
+          <h3>Flex Puzzle</h3>
+          <p>Flexbox properties were used to solve this puzzle.</p>
         </div>
 
-        <div class="puzzle-board" aria-label="Completed Sunset Valley puzzle">
-          <div class="tile" role="img" aria-label="Puzzle tile 1"></div>
-          <div class="tile" role="img" aria-label="Puzzle tile 2"></div>
-          <div class="tile" role="img" aria-label="Puzzle tile 3"></div>
-          <div class="tile" role="img" aria-label="Puzzle tile 4"></div>
-          <div class="tile" role="img" aria-label="Puzzle tile 5"></div>
-          <div class="tile" role="img" aria-label="Puzzle tile 6"></div>
-          <div class="tile" role="img" aria-label="Puzzle tile 7"></div>
-          <div class="tile" role="img" aria-label="Puzzle tile 8"></div>
-          <div class="tile" role="img" aria-label="Puzzle tile 9"></div>
+        <div class="puzzle-board" aria-label="Completed puzzle made with flexbox">
+          <div class="tile" aria-label="Puzzle tile 1"></div>
+          <div class="tile" aria-label="Puzzle tile 2"></div>
+          <div class="tile" aria-label="Puzzle tile 3"></div>
+          <div class="tile" aria-label="Puzzle tile 4"></div>
+          <div class="tile" aria-label="Puzzle tile 5"></div>
+          <div class="tile" aria-label="Puzzle tile 6"></div>
+          <div class="tile" aria-label="Puzzle tile 7"></div>
+          <div class="tile" aria-label="Puzzle tile 8"></div>
+          <div class="tile" aria-label="Puzzle tile 9"></div>
 
-          <img
-            class="faulty-piece"
-            src="assets/faulty-piece.svg"
-            alt="Faulty puzzle piece"
-          />
+          <svg class="tile faulty-piece" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-label="Faulty puzzle piece">
+            <rect width="180" height="180" fill="#e63946"/>
+            <g stroke="#fff" stroke-width="10" stroke-linecap="round">
+              <line x1="30" y1="30" x2="150" y2="150"/>
+              <line x1="150" y1="30" x2="30" y2="150"/>
+            </g>
+            <text x="90" y="170" text-anchor="middle" font-size="18" font-family="Arial" fill="#fff" font-weight="bold">FAULT</text>
+          </svg>
         </div>
 
-        <p class="note">The faulty puzzle piece is included in the HTML but hidden with CSS.</p>
+        <p class="note">The faulty puzzle piece is included but hidden using the display property.</p>
       </section>
 
-      <aside class="panel info" aria-labelledby="assignment-title">
-        <h3 id="assignment-title">Assignment Details</h3>
+      <aside class="panel info">
+        <h3>Assignment Details</h3>
         <ul>
           <li><strong>Name:</strong> Mary Wilson</li>
           <li><strong>Puzzle:</strong> Sunset Valley</li>

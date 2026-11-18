@@ -1,202 +1,262 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mary Wilson</title>
-    <style>
-      :root {
-        --bg-1: #111827;
-        --bg-2: #1d3557;
-        --panel: rgba(45, 55, 72, 0.92);
-        --panel-border: rgba(255, 255, 255, 0.12);
-        --text: #edf6ff;
-        --muted: #d7e3f5;
-        --accent: #ffc857;
-        --shadow: rgba(0, 0, 0, 0.3);
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mary Wilson – Butterfly Puzzle</title>
+
+  <style>
+    :root {
+      --ink: #25233a;
+      --accent: #7457b5;
+      --gold: #f2b84b;
+      --paper: #fffaf1;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      background:
+        linear-gradient(rgba(255, 250, 241, 0.88), rgba(255, 250, 241, 0.88)),
+        linear-gradient(135deg, #ffc7dd, #b7dbe9);
+    }
+
+    /* PAGE GRID */
+    .page-grid {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) minmax(360px, 2fr);
+      grid-template-rows: auto 1fr auto;
+      grid-template-areas:
+        "header puzzle"
+        "image  puzzle"
+        "footer puzzle";
+      gap: 18px;
+      max-width: 1100px;
+      margin: auto;
+      padding: 18px;
+    }
+
+    header,
+    .puzzle-section,
+    .footer {
+      border: 2px solid rgba(116, 87, 181, 0.18);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.88);
+      box-shadow: 0 10px 30px rgba(62, 47, 99, 0.12);
+    }
+
+    header {
+      grid-area: header;
+      padding: 28px;
+      background: var(--accent);
+      color: white;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+    }
+
+    header p {
+      margin: 8px 0 0;
+      color: #efe9ff;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .puzzle-section {
+      grid-area: puzzle;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 540px;
+      padding: 24px;
+      overflow: hidden;
+    }
+
+    .puzzle-section h2 {
+      margin: 0 0 18px;
+      color: var(--accent);
+      font-size: 1.5rem;
+    }
+
+    /* FLEX PUZZLE */
+    .puzzle {
+      width: min(100%, 510px);
+      aspect-ratio: 5 / 4;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      justify-content: center;
+      border: 10px solid white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 14px 34px rgba(37, 35, 58, 0.25);
+      background: #d6edf2;
+    }
+
+    .piece {
+      flex: 0 0 20%;
+      width: 20%;
+      aspect-ratio: 1 / 1;
+      margin: 0;
+      border: 0;
+      background-size: 500% 400%;
+      background-repeat: no-repeat;
+    }
+
+    /* Background positions assemble one butterfly illustration.
+       Pieces 1–20 show the same 5 × 4 image. */
+    .piece:nth-child(1)  { background-position: 0%   0%; }
+    .piece:nth-child(2)  { background-position: 25%  0%; }
+    .piece:nth-child(3)  { background-position: 50%  0%; }
+    .piece:nth-child(4)  { background-position: 75%  0%; }
+    .piece:nth-child(5)  { background-position: 100% 0%; }
+
+    .piece:nth-child(6)  { background-position: 0%   33.333%; }
+    .piece:nth-child(7)  { background-position: 25%  33.333%; }
+    .piece:nth-child(8)  { background-position: 50%  33.333%; }
+    .piece:nth-child(9)  { background-position: 75%  33.333%; }
+    .piece:nth-child(10) { background-position: 100% 33.333%; }
+
+    .piece:nth-child(11) { background-position: 0%   66.666%; }
+    .piece:nth-child(12) { background-position: 25%  66.666%; }
+    .piece:nth-child(13) { background-position: 50%  66.666%; }
+    .piece:nth-child(14) { background-position: 75%  66.666%; }
+    .piece:nth-child(15) { background-position: 100% 66.666%; }
+
+    .piece:nth-child(16) { background-position: 0%   100%; }
+    .piece:nth-child(17) { background-position: 25%  100%; }
+    .piece:nth-child(18) { background-position: 50%  100%; }
+    .piece:nth-child(19) { background-position: 75%  100%; }
+    .piece:nth-child(20) { background-position: 100% 100%; }
+
+    /*
+      Replace the SVG data below with the same image URL on every piece.
+      Using a data image makes this demo work without separate photo files.
+    */
+    .piece {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 800'%3E%3Cdefs%3E%3CradialGradient id='sky'%3E%3Cstop stop-color='%23fff8d8'/%3E%3Cstop offset='1' stop-color='%2357bfd1'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='1000' height='800' fill='url(%23sky)'/%3E%3Cg fill='%23f5c24e'%3E%3Ccircle cx='120' cy='110' r='12'/%3E%3Ccircle cx='780' cy='150' r='14'/%3E%3Ccircle cx='870' cy='620' r='10'/%3E%3C/g%3E%3Cg transform='translate(500 400)'%3E%3Cg fill='%23ed6b91' stroke='%23912d63' stroke-width='12'%3E%3Cellipse cx='-155' cy='-80' rx='145' ry='210' transform='rotate(-25)'/%3E%3Cellipse cx='155' cy='-80' rx='145' ry='210' transform='rotate(25)'/%3E%3Cellipse cx='-125' cy='155' rx='105' ry='130' transform='rotate(18)'/%3E%3Cellipse cx='125' cy='155' rx='105' ry='130' transform='rotate(-18)'/%3E%3C/g%3E%3Cg fill='%23ffe36a'%3E%3Ccircle cx='-155' cy='-90' r='48'/%3E%3Ccircle cx='155' cy='-90' r='48'/%3E%3Ccircle cx='-115' cy='155' r='34'/%3E%3Ccircle cx='115' cy='155' r='34'/%3E%3C/g%3E%3Cellipse rx='38' ry='210' fill='%23432b58'/%3E%3Cg fill='none' stroke='%23432b58' stroke-width='15' stroke-linecap='round'%3E%3Cpath d='M-25-170 Q-115-290-180-260'/%3E%3Cpath d='M25-170 Q115-290 180-260'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .faulty-piece {
+      display: none;
+    }
+
+    /* IMAGE SECTION */
+    .image-card {
+      grid-area: image;
+      min-height: 260px;
+      display: flex;
+      align-items: stretch;
+      border: 8px solid white;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(62, 47, 99, 0.12);
+    }
+
+    .image-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* FOOTER SECTION */
+    .footer {
+      grid-area: footer;
+      padding: 18px 22px;
+      text-align: center;
+    }
+
+    .footer strong {
+      display: block;
+      color: var(--accent);
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .footer time {
+      display: block;
+      margin-top: 5px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 760px) {
+      .page-grid {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "header"
+          "puzzle"
+          "image"
+          "footer";
       }
 
-      * { box-sizing: border-box; }
-
-      body {
-        margin: 0;
-        min-height: 100vh;
-        display: grid;
-        place-items: center;
-        background: linear-gradient(135deg, var(--bg-1), var(--bg-2));
-        color: var(--text);
-        font-family: Arial, Helvetica, sans-serif;
+      .puzzle-section {
+        min-height: 420px;
       }
+    }
+  </style>
+</head>
 
-      .page {
-        width: min(1100px, 92vw);
-        display: grid;
-        grid-template-columns: repeat(12, minmax(0, 1fr));
-        gap: 1.5rem;
-        padding: 2rem 0;
-      }
+<body>
+  <main class="page-grid">
+    <header>
+      <h1>Mary Wilson</h1>
+      <p>Butterfly Puzzle</p>
+    </header>
 
-      .panel {
-        background: var(--panel);
-        border: 1px solid var(--panel-border);
-        border-radius: 18px;
-        box-shadow: 0 18px 45px var(--shadow);
-        overflow: hidden;
-      }
+    <section class="puzzle-section" aria-labelledby="puzzle-title">
+      <h2 id="puzzle-title">Puzzle: Butterfly Garden</h2>
 
-      .intro {
-        grid-column: 1 / -1;
-        padding: 1.5rem 2rem;
-      }
+      <div class="puzzle" aria-label="Completed butterfly puzzle">
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
 
-      .eyebrow {
-        margin: 0 0 0.5rem;
-        font-size: 0.75rem;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: var(--accent);
-        font-weight: 700;
-      }
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
 
-      h1, h2, h3, p, ul { margin-top: 0; }
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
 
-      h1 {
-        margin-bottom: 0.35rem;
-        font-size: clamp(2rem, 3vw, 3rem);
-      }
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
+        <div class="piece"></div>
 
-      h2 {
-        margin-bottom: 0;
-        color: var(--muted);
-      }
+        <!-- Trick piece: included in the HTML but hidden with display: none -->
+        <div class="piece faulty-piece"></div>
+      </div>
+    </section>
 
-      .puzzle-panel {
-        grid-column: span 8;
-        padding: 1.5rem;
-      }
+    <figure class="image-card">
+      <img
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 600'%3E%3Crect width='1000' height='600' fill='%23fff4cc'/%3E%3Cg transform='translate(500 300)'%3E%3Cg fill='%23ed6b91' stroke='%23912d63' stroke-width='14'%3E%3Cellipse cx='-180' cy='-70' rx='170' ry='220' transform='rotate(-25)'/%3E%3Cellipse cx='180' cy='-70' rx='170' ry='220' transform='rotate(25)'/%3E%3C/g%3E%3Cellipse rx='35' ry='220' fill='%23432b58'/%3E%3C/g%3E%3C/svg%3E"
+        alt="Purple and pink butterfly illustration">
+    </figure>
 
-      .panel-heading {
-        margin-bottom: 1rem;
-      }
-
-      .panel-heading h3,
-      .info h3 {
-        color: var(--accent);
-        margin-bottom: 0.35rem;
-      }
-
-      .panel-heading p,
-      .note,
-      .info li {
-        color: var(--muted);
-      }
-
-      .puzzle-board {
-        width: min(540px, 100%);
-        aspect-ratio: 1;
-        display: flex;
-        flex-wrap: wrap;
-        margin: 0 auto;
-        border: 4px solid rgba(255,255,255,0.15);
-        border-radius: 12px;
-        background: #0f172a;
-        box-shadow: inset 0 0 0 2px rgba(255,255,255,0.05);
-        overflow: hidden;
-      }
-
-      .tile {
-        flex: 0 0 33.3333%;
-        width: 33.3333%;
-        aspect-ratio: 1;
-        background-image: url("assets/sunset-valley.svg");
-        background-size: 300% 300%;
-        background-repeat: no-repeat;
-        border: 1px solid rgba(255,255,255,0.12);
-        display: block;
-      }
-
-      .tile:nth-child(1) { background-position: 0% 0%; }
-      .tile:nth-child(2) { background-position: 50% 0%; }
-      .tile:nth-child(3) { background-position: 100% 0%; }
-      .tile:nth-child(4) { background-position: 0% 50%; }
-      .tile:nth-child(5) { background-position: 50% 50%; }
-      .tile:nth-child(6) { background-position: 100% 50%; }
-      .tile:nth-child(7) { background-position: 0% 100%; }
-      .tile:nth-child(8) { background-position: 50% 100%; }
-      .tile:nth-child(9) { background-position: 100% 100%; }
-
-      .faulty-piece {
-        display: none;
-      }
-
-      .info {
-        grid-column: span 4;
-        padding: 1.5rem 1.25rem;
-      }
-
-      .info ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-      }
-
-      .info li {
-        margin-bottom: 0.8rem;
-      }
-
-      @media (max-width: 850px) {
-        .puzzle-panel { grid-column: 1 / -1; }
-        .info { grid-column: 1 / -1; }
-      }
-    </style>
-  </head>
-  <body>
-    <main class="page">
-      <section class="panel intro">
-        <p class="eyebrow">Student</p>
-        <h1>Mary Wilson</h1>
-        <h2>Puzzle: Sunset Valley</h2>
-      </section>
-
-      <section class="panel puzzle-panel">
-        <div class="panel-heading">
-          <h3>Flex Puzzle</h3>
-          <p>Flexbox properties were used to solve this puzzle.</p>
-        </div>
-
-        <div class="puzzle-board" aria-label="Completed puzzle made with flexbox">
-          <div class="tile" aria-label="Puzzle tile 1"></div>
-          <div class="tile" aria-label="Puzzle tile 2"></div>
-          <div class="tile" aria-label="Puzzle tile 3"></div>
-          <div class="tile" aria-label="Puzzle tile 4"></div>
-          <div class="tile" aria-label="Puzzle tile 5"></div>
-          <div class="tile" aria-label="Puzzle tile 6"></div>
-          <div class="tile" aria-label="Puzzle tile 7"></div>
-          <div class="tile" aria-label="Puzzle tile 8"></div>
-          <div class="tile" aria-label="Puzzle tile 9"></div>
-
-          <svg class="tile faulty-piece" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-label="Faulty puzzle piece">
-            <rect width="180" height="180" fill="#e63946"/>
-            <g stroke="#fff" stroke-width="10" stroke-linecap="round">
-              <line x1="30" y1="30" x2="150" y2="150"/>
-              <line x1="150" y1="30" x2="30" y2="150"/>
-            </g>
-            <text x="90" y="170" text-anchor="middle" font-size="18" font-family="Arial" fill="#fff" font-weight="bold">FAULT</text>
-          </svg>
-        </div>
-
-        <p class="note">The faulty puzzle piece is included but hidden using the display property.</p>
-      </section>
-
-      <aside class="panel info">
-        <h3>Assignment Details</h3>
-        <ul>
-          <li><strong>Name:</strong> Mary Wilson</li>
-          <li><strong>Puzzle:</strong> Sunset Valley</li>
-          <li><strong>Completed:</strong> November 17, 2026</li>
-          <li><strong>Layout:</strong> CSS Grid + Flexbox</li>
-        </ul>
-      </aside>
-    </main>
-  </body>
+    <footer class="footer">
+      <strong>Completed</strong>
+      <time datetime="2026-11-18">November 18, 2026</time>
+    </footer>
+  </main>
+</body>
 </html>
